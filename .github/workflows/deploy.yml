@@ -1,0 +1,21 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-to-staging:
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: https://staging.example.com # Replace with your staging environment URL
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to Staging
+      run: |
+        echo "Deploying to Staging Environment..."
+        # Your staging deployment commands go here
+        echo "Staging deployment completed."
+

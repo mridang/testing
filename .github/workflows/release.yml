@@ -1,0 +1,21 @@
+name: Release to Production
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    environment: 
+      name: production
+      url: https://production.example.com # Replace with your production environment URL
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to Production
+      run: |
+        echo "Deploying to Production Environment..."
+        # Your production deployment commands go here
+        echo "Production deployment completed."
+
