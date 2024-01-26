@@ -2,8 +2,8 @@ name: Release to Production
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - master
 
 jobs:
   deploy-to-production:
