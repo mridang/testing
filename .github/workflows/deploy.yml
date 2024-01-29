@@ -8,7 +8,7 @@ on:
 jobs:
   deploy-to-staging:
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: staging
       url: https://staging.example.com # Replace with your staging environment URL
     steps:
@@ -18,4 +18,3 @@ jobs:
         echo "Deploying to Staging Environment..."
         # Your staging deployment commands go here
         echo "Staging deployment completed."
-

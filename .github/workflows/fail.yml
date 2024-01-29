@@ -16,6 +16,5 @@ jobs:
     - name: Deploy to QA
       run: |
         echo "Deploying to QA Environment..."
-        # Your qa deployment commands go here
+        exit 1
         echo "QA deployment completed."
-
