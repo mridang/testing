@@ -1,0 +1,21 @@
+name: Release to QA
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-to-qa:
+    runs-on: ubuntu-latest
+    environment:
+      name: qa
+      url: https://qa.example.com
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to QA
+      run: |
+        echo "Deploying to QA Environment..."
+        # Your qa deployment commands go here
+        echo "QA deployment completed."
+
