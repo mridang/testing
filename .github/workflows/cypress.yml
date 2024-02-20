@@ -1,4 +1,4 @@
-name: Deploy Serverless Application
+name: Run Canary
 
 on:
   push:
