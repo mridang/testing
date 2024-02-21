@@ -2,6 +2,10 @@ name: Run Canary
 
 on:
   workflow_dispatch:
+    inputs:
+      release_identifier:
+        description: 'Release identifier'
+        required: true
 
 defaults:
   run:
