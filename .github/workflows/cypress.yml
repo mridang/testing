@@ -1,9 +1,7 @@
 name: Run Canary
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 defaults:
   run:
