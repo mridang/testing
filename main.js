@@ -8,19 +8,7 @@ import { fileURLToPath } from 'url';
 import { ChatOpenAI } from '@langchain/openai';
 import { z } from 'zod';
 
-// Load environment variables from .env file
 config();
-
-// Set your OpenAI API key
-const openaiApiKey = process.env.OPENAI_API_KEY;
-
-// Variables
-const BASE_BRANCH = 'master';
-const NUM_COMMITS = Math.floor(Math.random() * 5) + 1; // Random number
-const REPO_URL = execSync('git config --get remote.origin.url').toString().trim();
-const REPO_MATCH = REPO_URL.match(/github\.com[:/](.+)\/(.+)\.git/);
-const REPO_OWNER = REPO_MATCH[1];
-const REPO_NAME = REPO_MATCH[2];
 
 // Helper to resolve __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -46,7 +34,7 @@ const schema = z.object({
 const model = new ChatOpenAI({
   model: "gpt-4",
   temperature: 0.7,
-  openAIApiKey: openaiApiKey,
+  openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
 const structuredLlm = model.withStructuredOutput(schema);
@@ -81,7 +69,6 @@ async function generateStructuredOutput() {
  */
 async function main() {
   const fggg = await generateStructuredOutput()
-  console.log(fggg)
   // Generate structured output
   const { branchName, commits, prTitle, prDescription } = fggg;
 
@@ -100,7 +87,7 @@ async function main() {
   execSync(`git push origin ${branchName}`);
 
   // Create a pull request using GitHub CLI
-  execSync(`gh pr create --repo ${REPO_OWNER}/${REPO_NAME} --title "${prTitle}" --body "${prDescription}" --head ${branchName} --base ${BASE_BRANCH}`);
+  execSync(`gh pr create --title "${prTitle}" --body "${prDescription}" --head ${branchName} --base=master`);
 
   console.log('Dummy pull request created successfully.');
 }
