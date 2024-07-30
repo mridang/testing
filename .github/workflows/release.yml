@@ -1,18 +1,18 @@
 name: Release to Production
 
 on:
-  push:
-    branches:
-      - master
+  deployment:
+    types: [created]
 
 jobs:
   deploy-to-production:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://production.example.com # Replace with your production environment URL
+      url: https://production.example.com
+
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Deploy to Production
       run: |
         echo "Deploying to Production Environment..."

@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: staging
-      url: https://staging.example.com # Replace with your staging environment URL
+      url: https://staging.example.com 
+
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Deploy to Staging
       run: |
         echo "Deploying to Staging Environment..."

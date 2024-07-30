@@ -11,8 +11,9 @@ jobs:
     environment:
       name: qa
       url: https://qa.example.com
+
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Deploy to QA
       run: |
         echo "Deploying to QA Environment..."
