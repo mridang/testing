@@ -15,7 +15,7 @@ config();
 const openaiApiKey = process.env.OPENAI_API_KEY;
 
 // Variables
-const BASE_BRANCH = 'main';
+const BASE_BRANCH = 'master';
 const NUM_COMMITS = Math.floor(Math.random() * 5) + 1; // Random number
 const REPO_URL = execSync('git config --get remote.origin.url').toString().trim();
 const REPO_MATCH = REPO_URL.match(/github\.com[:/](.+)\/(.+)\.git/);
