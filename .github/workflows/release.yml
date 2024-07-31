@@ -1,7 +1,12 @@
 name: Release to Production
 
 on:
-  deployment
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'The ref or sha to deploy'
+        required: true
+        default: 'main'
 
 jobs:
   deploy-to-production:
@@ -12,6 +17,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.ref }}
+
     - name: Deploy to Production
       run: |
         echo "Deploying to Production Environment..."
