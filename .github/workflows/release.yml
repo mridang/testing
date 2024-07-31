@@ -1,8 +1,7 @@
 name: Release to Production
 
 on:
-  deployment:
-    types: [created]
+  deployment
 
 jobs:
   deploy-to-production:
