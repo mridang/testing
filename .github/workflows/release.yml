@@ -23,5 +23,5 @@ jobs:
     - name: Deploy to Production
       run: |
         echo "Deploying to Production Environment..."
-        # Your production deployment commands go here
+        sleep 180
         echo "Production deployment completed."
