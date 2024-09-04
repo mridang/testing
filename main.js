@@ -68,28 +68,44 @@ async function generateStructuredOutput() {
  * 5. Creates a pull request using the GitHub CLI.
  */
 async function main() {
-  const fggg = await generateStructuredOutput()
-  // Generate structured output
-  const { branchName, commits, prTitle, prDescription } = fggg;
+  try {
+    const fggg = await generateStructuredOutput()
+    // Generate structured output
+    const { branchName, commits, prTitle, prDescription } = fggg;
 
-  // Create and switch to a new branch
-  execSync(`git checkout -b ${branchName}`);
+    // Create and switch to a new branch
+    execSync(`git checkout -b ${branchName}`);
 
-  // Create dummy commits
-  for (const { city, message, facts } of commits) {
-    const filePath = path.join(__dirname, `facts/${city.replace(/\s+/g, '_').toLowerCase()}.txt`);
-    fs.writeFileSync(filePath, facts);
-    execSync(`git add ${filePath}`);
-    execSync(`git commit -m "${message}"`);
+    // Create dummy commits
+    for (const { city, message, facts } of commits) {
+      const filePath = path.join(__dirname, `facts/${city.replace(/\s+/g, '_').toLowerCase()}.txt`);
+      fs.writeFileSync(filePath, facts);
+      execSync(`git add ${filePath}`);
+      execSync(`git commit -m "${message}"`);
+    }
+
+    // Push the branch to the remote repository
+    execSync(`git push origin ${branchName}`);
+
+    // Create a pull request using GitHub CLI
+    const prCreateOutput = execSync(`gh pr create --title "${prTitle}" --body "${prDescription}" --head ${branchName} --base master`).toString();
+    const prUrlMatch = prCreateOutput.match(/https:\/\/github\.com\/[^\/]+\/[^\/]+\/pull\/(\d+)/);
+    const prNumber = prUrlMatch[1];
+    if (!prUrlMatch) {
+        throw new Error('Failed to extract PR number from URL.');
+    } else {
+      console.log(`Created pull request #${prNumber}`);
+      execSync(`gh pr merge ${prNumber} --squash --admin`);
+      console.log('Pull request was merged to master.');
+    }
+
+    console.log("Done")
+  } finally {
+    console.log("Synchronising master...")
+    execSync(`git checkout master`);
+    execSync(`git pull`);
+    execSync(`git fetch --prune`);
   }
-
-  // Push the branch to the remote repository
-  execSync(`git push origin ${branchName}`);
-
-  // Create a pull request using GitHub CLI
-  execSync(`gh pr create --title "${prTitle}" --body "${prDescription}" --head ${branchName} --base=master`);
-
-  console.log('Dummy pull request created successfully.');
 }
 
 main().catch(console.error);
